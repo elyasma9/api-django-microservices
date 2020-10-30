@@ -15,5 +15,21 @@ services:
         volumes:
             - database_data:/var/lib/postgresql/data
 
+    backend:
+        container_name: backend_cliente
+        build:
+            context: .
+            args:
+                - ENV=${ENV}
+                - TIMEZONE=${TIMEZONE}
+        command: bash -c "python manage.py runserver 0:8000"
+        ports:
+            - ${DJANGO_PORT}:${DJANGO_PORT}
+        volumes:
+            - .:/app
+
+        restart: unless-stopped
+        depends_on:
+            - database
 volumes:
     database_data:
