@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
     database:
-        container_name: cliente
+        container_name: database_cliente
         image: postgres:12
         ports:
             - ${DATABASE_PORT}:${DATABASE_PORT}
@@ -15,8 +15,8 @@ services:
         volumes:
             - database_data:/var/lib/postgresql/data
 
-    backend:
-        container_name: backend_cliente
+    api:
+        container_name: api_cliente
         build:
             context: .
             args:
