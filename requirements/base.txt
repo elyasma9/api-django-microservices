@@ -6,3 +6,6 @@ psycopg2-binary==2.8.6
 pytz==2020.1
 sqlparse==0.4.1
 python-decouple==3.3
+djangogrpcframework==0.2
+grpcio==1.33.2
+grpcio-tools==1.33.2

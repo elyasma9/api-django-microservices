@@ -33,3 +33,10 @@ urlpatterns = [
     path("api/v1/", include(clientes_router.urls)),
     path("admin/", admin.site.urls),
 ]
+
+# Configuração de rotas do serviço
+from clientes.handlers import grpc_handlers as cliente_grpc_handlers
+
+# LISTA DE SERVIÇOS CRIADOS
+def grpc_handlers(server):
+    cliente_grpc_handlers(server)
