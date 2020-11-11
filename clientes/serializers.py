@@ -3,8 +3,8 @@ from clientes.models import Cliente
 from cliente_proto import cliente_pb2
 
 
-class ClienteProtoSerializer(proto_serializers.ProtoSerializer):
+class ClienteProtoSerializer(proto_serializers.ModelProtoSerializer):
     class Meta:
         model = Cliente
-        cliente_class = cliente_pb2
-        fields = ['cd_cliente', 'nome', 'sobrenome', 'cpf', 'sexo',]
+        proto_class = cliente_pb2.Cliente
+        fields = ["cd_cliente", "nome", "sobrenome", "cpf", "sexo"]
