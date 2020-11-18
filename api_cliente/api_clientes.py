@@ -35,4 +35,4 @@ with grpc.insecure_channel("localhost:50051") as channel:
     print(response, end="")
 
     print("----- Delete -----")
-    stub.Destroy(cliente_pb2.Cliente(cd_cliente="388783d1-4ca5-4841-9557-6091077994de"))
+    stub.Destroy(cliente_pb2.Cliente(cd_cliente=response.cd_cliente))
