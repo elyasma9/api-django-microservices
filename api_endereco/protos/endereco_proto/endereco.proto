@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package endereco;
+
+import "google/protobuf/empty.proto";
+
+service EnderecoController {
+    rpc List(EnderecoListRequest) returns (stream Endereco) {}
+    rpc Create(Endereco) returns (Endereco) {}
+    rpc Retrieve(EnderecoRetrieveRequest) returns (Endereco) {}
+    rpc Update(Endereco) returns (Endereco) {}
+    rpc Destroy(Endereco) returns (google.protobuf.Empty) {}
+}
+
+message Endereco {
+    string cd_endereco = 1;
+    string cep = 2;
+    string logradouro = 3;
+    string bairro = 4;
+    string cidade = 5;
+    string estado = 6;
+}
+
+message EnderecoListRequest {
+}
+
+message EnderecoRetrieveRequest{
+    string cd_endereco = 1;
+}

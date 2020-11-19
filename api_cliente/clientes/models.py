@@ -25,6 +25,7 @@ class Cliente(models.Model):
         blank=True,
         null=False,
     )
+    endereco = models.PositiveIntegerField("Endereço")
 
 
 class Contato(models.Model):

@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+    nginx:
+        image: gustavofonseca/nginx-wait-for:1.0
+        ports:
+            - 80:80
+        restart: unless-stopped
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            # - ./portalvida/media:/media
+            # - ./portalvida/static_files:/static
+        environment:
+            - WAIT_FOR=backend:8000
+            - WAIT_FOR_TIMEOUT=15
+
+    database:
+        container_name: database_cliente
+        image: postgres:12
+        ports:
+            - ${DATABASE_PORT}:${DATABASE_PORT}
+        environment:
+            POSTGRES_DB: ${DATABASE_NAME}
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASS}
+            TZ: ${TIMEZONE}
+            PGTZ: ${TIMEZONE}
+        volumes:
+            - database_data:/var/lib/postgresql/data
+
+    api:
+        container_name: api_cliente
+        build:
+            context: .
+            args:
+                - ENV=${ENV}
+                - TIMEZONE=${TIMEZONE}
+        command: bash -c "python manage.py runserver 0:8000"
+        ports:
+            - ${DJANGO_PORT}:${DJANGO_PORT}
+        volumes:
+            - .:/app
+
+        restart: unless-stopped
+        depends_on:
+            - database
+volumes:
+    database_data:
