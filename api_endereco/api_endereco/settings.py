@@ -26,8 +26,10 @@ SECRET_KEY = "n3!__&6j-xkcl9*&$z9*6vf_9qo4q#=iq2dy8!!ys7#bli&n^w"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
 
+# GRPC HANDLERS
+GRPC_HANDLERS = "api_endereco.handlers"
 
 # Application definition
 

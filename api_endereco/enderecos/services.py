@@ -9,6 +9,6 @@ from endereco_proto.endereco_pb2 import Endereco as EnderecoProto
 class EnderecoService(EnderecoControllerServicer):
     def List(self, request, context):
         endereco = Endereco.objects.all()
-        enderecos = EnderecoSerializer(endereco)
         for endereco in enderecos:
+            enderecos = EnderecoSerializer(endereco)
             yield EnderecoProto(**endereco)

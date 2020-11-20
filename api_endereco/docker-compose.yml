@@ -15,7 +15,7 @@ services:
             - WAIT_FOR_TIMEOUT=15
 
     database:
-        container_name: database_cliente
+        container_name: database_endereco
         image: postgres:12
         ports:
             - ${DATABASE_PORT}:${DATABASE_PORT}
@@ -29,7 +29,7 @@ services:
             - database_data:/var/lib/postgresql/data
 
     api:
-        container_name: api_cliente
+        container_name: api_endereco
         build:
             context: .
             args:
