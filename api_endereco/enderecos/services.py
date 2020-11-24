@@ -13,11 +13,13 @@ class EnderecoService(EnderecoControllerServicer):
             response = EnderecoSerializer(endereco)
             yield EnderecoProto(**response.data)
 
-    """def Create(self, request, context):
-        endereco_req = request.data
-        endereco_ctx = context
-        print(endereco_req)
-        print(endereco_ctx)
-        endereco_ctx_cad = Endereco.objects.create(**endereco_ctx)
+    def Create(self, request, context):
+        serializer = EnderecoSerializer(request)
 
-        return EnderecoProto(endereco_ctx_cad)"""
+        # endereco_ctx = context
+        # print("----CREATE----")
+        # print(endereco_req)
+        # print(endereco_ctx)
+        # endereco_ctx_cad = Endereco.objects.create(**endereco_ctx)
+
+        # return EnderecoProto(endereco_ctx_cad)

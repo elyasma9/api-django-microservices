@@ -1,5 +1,6 @@
 import grpc
 from endereco_proto import endereco_pb2_grpc, endereco_pb2
+from enderecos.serializers import EnderecoSerializer
 
 
 class EnderecoClient:
@@ -9,17 +10,17 @@ class EnderecoClient:
 
     def list(self):
         enderecos = self.stub.List(endereco_pb2.EnderecoListRequest())
-        return enderecos
+        for endereco in enderecos:
+            yield endereco
 
-    def create(self):
+    def create(self, request):
         endereco = self.stub.Create(
             endereco_pb2.Endereco(
-                cd_endereco="b0bba063-3901-4947-b34e-a946fae35156",
-                cep="49160000",
-                logradouro="Rua a 32",
-                bairro="17 de outubro",
-                cidade="Aracaju",
-                estado="SERGIPE",
+                cep=request["cep"],
+                logradouro=request["logradouro"],
+                bairro=request["bairro"],
+                cidade=request["cidade"],
+                estado=request["estado"]
             )
         )
-        return EnderecoProto(endereco)
+        return endereco
