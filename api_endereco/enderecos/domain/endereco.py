@@ -14,13 +14,21 @@ class EnderecoClient:
             yield endereco
 
     def create(self, request):
+        print(request)
         endereco = self.stub.Create(
             endereco_pb2.Endereco(
                 cep=request["cep"],
                 logradouro=request["logradouro"],
                 bairro=request["bairro"],
                 cidade=request["cidade"],
-                estado=request["estado"]
+                estado=request["estado"],
             )
+        )
+
+        return endereco
+
+    def retrieve(self, pk):
+        endereco = self.stub.Retrieve(
+            endereco_pb2.EnderecoRetrieveRequest(cd_endereco=pk)
         )
         return endereco
