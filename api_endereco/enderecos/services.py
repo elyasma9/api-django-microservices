@@ -8,7 +8,16 @@ from endereco_proto.endereco_pb2 import Endereco as EnderecoProto
 
 class EnderecoService(EnderecoControllerServicer):
     def List(self, request, context):
-        endereco = Endereco.objects.all()
+        enderecos = Endereco.objects.all()
         for endereco in enderecos:
-            enderecos = EnderecoSerializer(endereco)
-            yield EnderecoProto(**endereco)
+            response = EnderecoSerializer(endereco)
+            yield EnderecoProto(**response.data)
+
+    """def Create(self, request, context):
+        endereco_req = request.data
+        endereco_ctx = context
+        print(endereco_req)
+        print(endereco_ctx)
+        endereco_ctx_cad = Endereco.objects.create(**endereco_ctx)
+
+        return EnderecoProto(endereco_ctx_cad)"""

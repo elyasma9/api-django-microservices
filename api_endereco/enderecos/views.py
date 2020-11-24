@@ -9,12 +9,13 @@ from enderecos.domain.endereco import EnderecoClient
 class EnderecoViewSet(ViewSet):
     def list(self, request, *args, **kwargs):
         enderecos_client = EnderecoClient()
-        # endereco = enderecos_client.create()
-        # print(endereco)
-        # enderecos = enderecos_client.list()
-        # for endereco in enderecos:
-            # print(endereco)
-            # print(endereco.message)
-            # response = EnderecoSerializer(endereco)
-            # print(response)
-        return Response({"status": "OK"})
+        enderecos = enderecos_client.list()
+        print(enderecos)
+        return Response({"teste":"enderecos"})
+
+    '''def create(self, request, *args, **kwargs):
+        enderecos_client = EnderecoClient()
+        endereco = enderecos_client.create()
+        response = EnderecoSerializer(endereco)
+        return response'''
+
