@@ -1,5 +1,5 @@
 import grpc
-from google.protobuf import empty_pb2
+from google.protobuf.empty_pb2 import Empty
 from .models import Endereco
 from .serializers import EnderecoSerializer
 from endereco_proto.endereco_pb2_grpc import EnderecoControllerServicer
@@ -32,7 +32,39 @@ class EnderecoService(EnderecoControllerServicer):
 
     def Retrieve(self, request, context):
         endereco = MessageToDict(request)
-        endereco_query = Endereco.objects.get(cd_endereco=endereco.get("cd_endereco"))
-        endereco_proto = EnderecoProto(**endereco_query)
-        print(endereco_proto)
+        endereco_query = Endereco.objects.filter(
+            cd_endereco=str(endereco.get("cdEndereco"))
+        )
+        if not endereco_query:
+            return Empty()
+        endereco_serializer = EnderecoSerializer(endereco_query.first())
+        endereco_proto = EnderecoProto(**endereco_serializer.data)
+        return endereco_proto
+
+    # TODO: Retornar mensagem vazia pode ser um problema por causa do **CASO**
+    # de objeto não encontrado
+    def Destroy(self, request, context):
+        endereco = MessageToDict(request)
+        endereco_query = Endereco.objects.get(
+            cd_endereco=str(endereco.get("cdEndereco"))
+        )
+        endereco_query.delete()
+        return Empty()
+
+    def Update(self, request, *args, **kwargs):
+        endereco = MessageToDict(request)
+        obj = Endereco.objects.filter(
+            cd_endereco=endereco.get("cdEndereco")
+        ).update(
+            cep=endereco.get("cep"),
+            logradouro=endereco.get("logradouro"),
+            bairro=endereco.get("bairro"),
+            cidade=endereco.get("cidade"),
+            estado=endereco.get("estado"),
+        )
+
+        del endereco["cdEndereco"]
+        endereco["cd_endereco"] = str(endereco.get("cdEndereco"))
+        endereco_proto = EnderecoProto(**endereco)
+
         return endereco_proto

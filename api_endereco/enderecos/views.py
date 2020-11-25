@@ -27,10 +27,26 @@ class EnderecoViewSet(ViewSet):
         endereco = EnderecoClient()
         response = endereco.create(request.data)
         response = MessageToDict(response)
+
         return Response(response)
 
     def retrieve(self, request, pk=None):
-        queryset = Endereco.objects.all()
-        endereco = get_object_or_404(queryset, pk=pk)
-        serializer = EnderecoSerializer(endereco)
-        return Response(serializer.data)
+        endereco = EnderecoClient()
+        endereco_query = endereco.retrieve(pk)
+        response = MessageToDict(endereco_query)
+
+        return Response(response)
+
+    def destroy(self, request, pk=None):
+        endereco = EnderecoClient()
+        endereco_query = endereco.destroy(pk)
+        response = MessageToDict(endereco_query)
+
+        return Response({"message": "Endereço excluído com sucesso"})
+
+    def update(self, request, *args, **kwargs):
+        endereco = EnderecoClient()
+        response = endereco.update(request.data)
+        response = MessageToDict(response)
+
+        return Response(response)

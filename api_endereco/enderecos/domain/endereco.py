@@ -1,4 +1,5 @@
 import grpc
+from google.protobuf import empty_pb2
 from endereco_proto import endereco_pb2_grpc, endereco_pb2
 from enderecos.serializers import EnderecoSerializer
 
@@ -14,7 +15,6 @@ class EnderecoClient:
             yield endereco
 
     def create(self, request):
-        print(request)
         endereco = self.stub.Create(
             endereco_pb2.Endereco(
                 cep=request["cep"],
@@ -30,5 +30,21 @@ class EnderecoClient:
     def retrieve(self, pk):
         endereco = self.stub.Retrieve(
             endereco_pb2.EnderecoRetrieveRequest(cd_endereco=pk)
+        )
+        return endereco
+
+    def destroy(self, pk):
+        endereco = self.stub.Destroy(endereco_pb2.Endereco(cd_endereco=pk))
+        return endereco
+
+    def update(self, request):
+        endereco = self.stub.Update(
+            endereco_pb2.Endereco(
+                cep=request["cep"],
+                logradouro=request["logradouro"],
+                bairro=request["bairro"],
+                cidade=request["cidade"],
+                estado=request["estado"],
+            )
         )
         return endereco
